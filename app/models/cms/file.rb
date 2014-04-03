@@ -8,6 +8,9 @@ class Cms::File < ActiveRecord::Base
   attr_accessor :dimensions
   
   has_attached_file :file, ComfortableMexicanSofa.config.upload_file_options.merge(
+    :storage => :dropbox,
+    :dropbox_credentials => Rails.root.join("config/dropbox.yml"),
+    :path => ":style/:id_:filename",
     # dimensions accessor needs to be set before file assignment for this to work
     :styles => lambda { |f|
       if f.respond_to?(:instance) && f.instance.respond_to?(:dimensions)
